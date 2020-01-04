@@ -1,0 +1,23 @@
+@import './responsive.scss';
+
+.header {
+  background-color: $themeGreen;
+  padding: 20px;
+  color: $white;
+  @include breakpoint(md) {
+    font-size: 24px;
+    color: gray;
+  }
+  @include breakpoint(sm) {
+    font-size: 20px;
+    color: gray;
+  }
+  @include breakpoint(xs) {
+    font-size: 16px;
+    color: yellow;
+  }
+  @include breakpoint(xxs) {
+    font-size: 12px;
+    color: red;
+  }
+}

@@ -7,6 +7,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+// const MediaQuerySplittingPlugin = require('media-query-splitting-plugin');
 
 const rootDir = path.resolve(__dirname, '.');
 const PATH_SRC = path.join(__dirname, './src');
@@ -24,7 +25,7 @@ module.exports = env => {
   return {
     context: rootDir,
     mode: environment,
-    entry: [path.join(PATH_SRC, './index.js')],
+    entry: [path.join(PATH_SRC, './app.js')],
     output: {
       path: PATH_DIST,
       filename: 'js/[name].[hash].js',
@@ -78,22 +79,7 @@ module.exports = env => {
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                [
-                  '@babel/preset-env',
-                  {
-                    debug: true,
-                    useBuiltIns: 'usage',
-                    corejs: 3,
-                  },
-                ],
-                '@babel/preset-react',
-              ],
-            },
-          },
+          loader: 'babel-loader',
         },
         {
           test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|otf|svg)(\?[a-z0-9=.]+)?$/,
@@ -121,16 +107,6 @@ module.exports = env => {
     },
     resolve: {
       extensions: ['*', '.js', '.scss', '.css'],
-      alias: {
-        Assets: path.resolve(__dirname, '../', '../', 'src/assets/'),
-        Styles: path.resolve(__dirname, '../', '../', 'src/assets/styles'),
-        Routes: path.resolve(__dirname, '../', '../', 'src/routes/'),
-        Redux: path.resolve(__dirname, '../', '../', 'src/redux/'),
-        Utils: path.resolve(__dirname, '../', '../', 'src/utils/'),
-        Views: path.resolve(__dirname, '../', '../', 'src/views/'),
-        Hoc: path.resolve(__dirname, '../', '../', 'src/hoc/'),
-        Constants: path.resolve(__dirname, '../', '../', 'src/constants/'),
-      },
     },
     plugins: [
       new CleanWebpackPlugin(),
@@ -152,9 +128,23 @@ module.exports = env => {
       }),
       new CopyPlugin([{ from: 'public/assets', to: 'assets' }]),
       new MiniCssExtractPlugin({
-        filename: isDevelopment ? '[name].css' : '[name].[hash].css',
-        chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css',
+        filename: isDevelopment
+          ? 'assets/css/[name].css'
+          : 'assets/css/[name].[hash].css',
+        chunkFilename: isDevelopment
+          ? 'assets/css/[id].css'
+          : 'assets/css/[id].[hash].css',
       }),
+      // new MediaQuerySplittingPlugin({
+      //   media: {
+      //     mobileEnd: 568,
+      //     tabletPortraitEnd: 768,
+      //     tabletLandscapeEnd: 1024,
+      //   },
+      //   splitTablet: true,
+      //   minify: true,
+      //   units: 'px',
+      // }),
       new webpack.DefinePlugin(envKeys),
     ],
   };

@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import View from './views';
 
 function Root() {
-  return (
-    <h1>
-      Hello, world. we are on <i> {`${process.env.environment}`} </i>
-      environment
-    </h1>
-  );
+  return <View />;
 }
 
 // Render the Root element into the DOM

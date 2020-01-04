@@ -10,9 +10,27 @@ const presets = [
       corejs: 3,
     },
   ],
+  '@babel/preset-react',
 ];
 
-const plugins = [];
+const plugins = ['@babel/plugin-proposal-class-properties'];
 
 // Exports a config object
 module.exports = { presets, plugins };
+
+// use: {
+//   loader: 'babel-loader',
+//   options: {
+//     presets: [
+//       [
+//         '@babel/preset-env',
+//         {
+//           debug: true,
+//           useBuiltIns: 'usage',
+//           corejs: 3,
+//         },
+//       ],
+//       '@babel/preset-react',
+//     ],
+//   },
+// },
