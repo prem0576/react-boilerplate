@@ -32,7 +32,7 @@ const reducer = (state, action) => {
     case USER_LOGOUT:
       return { ...initialState };
     default:
-      throw new Error();
+      throw new Error('Should be a legit action');
   }
 };
 
@@ -57,7 +57,7 @@ AuthProvider.propTypes = {
 const useAuthState = () => {
   const { state } = React.useContext(AuthContext);
   if (state === undefined) {
-    throw new Error('useAuthState must be used within a AuthContextProvider');
+    throw new Error('useAuthState must be used within a AuthProvider');
   }
   return state;
 };
@@ -65,9 +65,7 @@ const useAuthState = () => {
 const useAuthDispatch = () => {
   const { dispatch } = React.useContext(AuthContext);
   if (dispatch === undefined) {
-    throw new Error(
-      'useAuthDispatch must be used within a AuthContextProvider'
-    );
+    throw new Error('useAuthDispatch must be used within a AuthProvider');
   }
   return dispatch;
 };
