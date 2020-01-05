@@ -11,7 +11,7 @@ import '../../assets/styles/header.scss';
 
 const Header = () => {
   const authState = useAuthState();
-  const dispatch = useAuthDispatch();
+  const authDispatch = useAuthDispatch();
   return (
     <>
       <div className="left"> Welcome </div>
@@ -19,8 +19,8 @@ const Header = () => {
         <button
           onClick={() =>
             authState.token
-              ? userLogoutAction(dispatch)
-              : userLoginAsyncAction(dispatch)
+              ? userLogoutAction(authDispatch)
+              : userLoginAsyncAction(authDispatch)
           }
         >
           {authState.token ? 'Logout' : 'Login'}{' '}

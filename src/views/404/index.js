@@ -1,10 +1,15 @@
 import React from 'react';
-import Error from '../../assets/svg/errorView.svg';
+import { PropTypes } from 'prop-types';
 
-const PageNotFound = () => (
+const PageNotFound = props => (
   <div>
-    <img src={Error} />
+    Oh, you have entered a forbiddon territory. wanna go back to{' '}
+    <button onClick={() => props.history.push('/')}> Home </button> ?{' '}
   </div>
 );
+
+PageNotFound.propTypes = {
+  history: PropTypes.element.isRequired,
+};
 
 export default PageNotFound;
