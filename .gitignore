@@ -2,3 +2,7 @@ dist
 node_modules
 .env
 .DS_Store
+package-lock.json
+.env.staging
+.env.prod
+.env.dev
