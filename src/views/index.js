@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import ROUTES from '../routes';
-import { AuthProvider } from '../context/providers/authProvider';
 import ErrorBoundary from './shared/errorBoundary';
 import Header from './shared/header';
 import '../assets/styles/main.scss';
@@ -20,7 +19,6 @@ const View = () => {
   return (
     <Router basename={'/'}>
       <ErrorBoundary>
-        <AuthProvider>
           <div className="root">
             <div className="header">
               <Header />
@@ -31,7 +29,6 @@ const View = () => {
               <Switch>{renderRoutes()}</Switch>
             </div>
           </div>
-        </AuthProvider>
       </ErrorBoundary>
     </Router>
   );

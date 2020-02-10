@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const dotenv = require('dotenv');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -14,7 +15,8 @@ const PATH_SRC = path.join(__dirname, './src');
 const PATH_PUBLIC = path.join(__dirname, './public');
 const PATH_DIST = path.join(__dirname, './dist');
 
-module.exports = env => {
+module.exports = () => {
+  const env = dotenv.config().parsed;
   const envKeys = {};
   Object.keys(env).forEach(elm => {
     envKeys[`process.env.${elm}`] = JSON.stringify(env[elm]);
@@ -33,12 +35,18 @@ module.exports = env => {
     devServer: {
       contentBase: PATH_DIST,
       host: 'localhost',
-      port: 8080,
+      port: 7070,
       historyApiFallback: true,
+      hot: true,
+      open: true,
       overlay: {
         errors: true,
         warnings: true,
       },
+    },
+    devtool: 'cheap-module-source-map',
+    resolve: {
+      extensions: ['*', '.js', '.scss', '.css'],
     },
     optimization: {
       minimize: true,
@@ -91,7 +99,7 @@ module.exports = env => {
           ],
         },
         {
-          test: /\.(sa|sc|c)ss$/,
+          test: /\.scss$/,
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
@@ -103,10 +111,17 @@ module.exports = env => {
             'sass-loader',
           ],
         },
+        {
+          test: /\.css$/,
+          use: [
+            { loader: 'style-loader' },
+            {
+              loader: 'css-loader',
+            },
+            { loader: 'sass-loader' },
+          ],
+        },
       ],
-    },
-    resolve: {
-      extensions: ['*', '.js', '.scss', '.css'],
     },
     plugins: [
       new CleanWebpackPlugin(),
